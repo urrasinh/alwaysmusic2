@@ -1,14 +1,16 @@
 const { Pool } = require("pg")
-const argumentos = process.argv
-const { consulta, nuevo, editar, rut, eliminar } = require('./consultas')
+const argumentos = process.argv // devuelve una matriz que contiene los argumentos pasados ​​en línea de comandos. 
+const { consulta, nuevo, editar, rut, eliminar } = require('./consultas') // modulos importados
 
-
+// process.argv[0] == "node"
+// process.argv[1] == "index.js"
 const accionSql = argumentos[2]
 const param1 = argumentos[3]
 const param2 = argumentos[4]
 const param3 = argumentos[5]
 const param4 = argumentos[6]
 
+// conexión por propiedades
 const config = {
     user: "postgres",
     host: "localhost",
@@ -20,13 +22,13 @@ const config = {
     connectionTimeoutMillis: 2000,
 }
 
-const pool = new Pool(config)
-
+const pool = new Pool(config) // Clase Pool
+// “connect()”, el cual contiene una función callback asíncrona.
 pool.connect(async (error_conexion, client, release) => {
-    if (error_conexion) {
+    if (error_conexion) { // si hay error en la conxión
         console.error(error_conexion.code)
-    } else {
-        switch (accionSql) {
+    } else { // todo Ok
+        switch (accionSql) { // selección de argumentos
             case 'consulta':
                 await consulta(client)
                 break
@@ -46,8 +48,8 @@ pool.connect(async (error_conexion, client, release) => {
                 console.log('error')
                 break
         }
-        release()
-        pool.end()
+        release() 
+        pool.end() 
     }
 })
 

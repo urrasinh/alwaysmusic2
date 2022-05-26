@@ -1,5 +1,6 @@
 const nuevo = async (nombre, rut, curso, nivel, client) => {
-    const SQLQuery = {
+ // Query utilizando texto plano con parámetros 
+    const SQLQuery = { // Objeto JSON cómo argumento de consultas
         text: `INSERT INTO alumnos (nombre, rut, curso, nivel) VALUES ($1, $2, $3, $4);`,
         values: [nombre, rut, curso, nivel],
     }
@@ -11,7 +12,7 @@ const nuevo = async (nombre, rut, curso, nivel, client) => {
     }
 }
 
-const consulta = async (client) => {
+const consulta = async (client) => {  
     const SQLQuery = {
         name: 'consultar-todos',
         text: `SELECT * FROM alumnos;`,
@@ -60,7 +61,7 @@ const rut = async (rut, client) => {
 const eliminar = async (rut, client) => {
     const SQLQuery = {
         name: 'eliminar',
-        text: `DELETE FROM alumnos WHERE rut = $1;`,
+        text: `DELETE FROM alumnos WHERE rut = $1`,
         values: [rut],
     }
     try {
